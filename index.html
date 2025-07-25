@@ -55,6 +55,23 @@
     font-size:1.1rem;
     text-align:center;
   }
+  .answers-review {
+    margin-top:1.5rem;
+    background:#f9f9f9;
+    padding:1rem;
+    border-radius:10px;
+    border-left:6px solid #2b7a78;
+  }
+  .answers-review h3 {
+    margin-top:0;
+    color:#197278;
+  }
+  .answers-review ul {
+    margin:0; padding-left:1.2rem;
+  }
+  .answers-review li {
+    margin:0.4rem 0;
+  }
 </style>
 </head>
 <body>
@@ -139,10 +156,22 @@ function submitAnswer() {
 }
 
 function showResult() {
+  // Build list of correct answers
+  let answersHtml = "<ul>";
+  quizData.forEach(q => {
+    const correctText = q[q.correct];
+    answersHtml += `<li><strong>${q.question}</strong><br>✅ Correct answer: ${correctText}</li>`;
+  });
+  answersHtml += "</ul>";
+
   quizContainer.innerHTML = `
     <div class="result">
       ✅ You scored ${score} out of ${quizData.length}!<br>
-      ${score === quizData.length ? "🎉 Perfect score! Breathe easy, champ!" : "💡 Review the article and try again for a higher score!"}
+      ${score === quizData.length ? "🎉 Perfect score! Breathe easy, champ!" : "💡 Review below and try again for a higher score!"}
+    </div>
+    <div class="answers-review">
+      <h3>✔️ Correct Answers Review</h3>
+      ${answersHtml}
     </div>
     <button onclick="restartQuiz()">Try Again</button>
   `;
