@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asthma & Respiratory Infections Knowledge Check</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom,#ffffff,#f8f8f8);
+    margin:0; padding:1rem;
+    color:#222;
+  }
+  h1 {
+    text-align:center;
+    background:linear-gradient(90deg,#2b7a78,#3aafa9);
+    color:#fff;
+    padding:1rem;
+    border-radius:12px;
+  }
+  .quiz-container {
+    max-width:700px;
+    margin:2rem auto;
+    background:#fff;
+    padding:1.5rem;
+    border-radius:16px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  }
+  .question {
+    margin-bottom:1rem;
+    font-weight:bold;
+    color:#197278;
+  }
+  .answers label {
+    display:block;
+    margin:0.3rem 0;
+    cursor:pointer;
+  }
+  button {
+    background:#3aafa9;
+    color:#fff;
+    border:none;
+    padding:0.7rem 1.2rem;
+    border-radius:8px;
+    font-size:1rem;
+    cursor:pointer;
+    margin-top:1rem;
+  }
+  button:hover {
+    background:#2b7a78;
+  }
+  .result {
+    margin-top:1.5rem;
+    font-weight:bold;
+    font-size:1.1rem;
+    text-align:center;
+  }
+</style>
+</head>
+<body>
+
+<h1>🫁 Knowledge Check: Respiratory Infections & Asthma</h1>
+
+<div class="quiz-container" id="quiz">
+  <!-- Questions go here -->
+</div>
+
+<script>
+const quizData = [
+  {
+    question: "1. Why are respiratory infections more serious for people with asthma?",
+    a: "They make people immune to flu.",
+    b: "They can lead to pneumonia and asthma attacks.",
+    c: "They cure asthma permanently.",
+    correct: "b"
+  },
+  {
+    question: "2. What is the most important step to protect against flu?",
+    a: "Taking antibiotics regularly.",
+    b: "Getting an annual flu vaccine.",
+    c: "Avoiding exercise.",
+    correct: "b"
+  },
+  {
+    question: "3. Can COVID-19 infection trigger an asthma attack?",
+    a: "Yes, it can.",
+    b: "No, never.",
+    c: "Only if you skip breakfast.",
+    correct: "a"
+  },
+  {
+    question: "4. What does improving ventilation and filtration help with?",
+    a: "It prevents virus particles from building up indoors.",
+    b: "It makes your inhaler stronger.",
+    c: "It eliminates the need for vaccines.",
+    correct: "a"
+  },
+  {
+    question: "5. What should you do with your asthma medications during infections?",
+    a: "Stop them immediately.",
+    b: "Double your dose without advice.",
+    c: "Continue them and follow your plan.",
+    correct: "c"
+  }
+];
+
+const quizContainer = document.getElementById('quiz');
+let currentStep = 0;
+let score = 0;
+
+function loadQuestion() {
+  const q = quizData[currentStep];
+  quizContainer.innerHTML = `
+    <div class="question">${q.question}</div>
+    <div class="answers">
+      <label><input type="radio" name="answer" value="a"> ${q.a}</label>
+      <label><input type="radio" name="answer" value="b"> ${q.b}</label>
+      <label><input type="radio" name="answer" value="c"> ${q.c}</label>
+    </div>
+    <button onclick="submitAnswer()">Submit</button>
+  `;
+}
+
+function submitAnswer() {
+  const selected = document.querySelector('input[name="answer"]:checked');
+  if (!selected) {
+    alert("Please select an answer!");
+    return;
+  }
+  if (selected.value === quizData[currentStep].correct) {
+    score++;
+  }
+  currentStep++;
+  if (currentStep < quizData.length) {
+    loadQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  quizContainer.innerHTML = `
+    <div class="result">
+      ✅ You scored ${score} out of ${quizData.length}!<br>
+      ${score === quizData.length ? "🎉 Perfect score! Breathe easy, champ!" : "💡 Review the article and try again for a higher score!"}
+    </div>
+    <button onclick="restartQuiz()">Try Again</button>
+  `;
+}
+
+function restartQuiz() {
+  currentStep = 0;
+  score = 0;
+  loadQuestion();
+}
+
+// start quiz
+loadQuestion();
+</script>
+
+</body>
+</html>
